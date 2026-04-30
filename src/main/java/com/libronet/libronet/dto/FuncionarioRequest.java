@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FuncionarioRequest {
+    private Long numeroDocumento;
     private String nombreCompleto;
     private LocalDate fechaIngreso;
 }
