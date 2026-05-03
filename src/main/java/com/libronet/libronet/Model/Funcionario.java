@@ -1,16 +1,14 @@
 package com.libronet.libronet.Model;
 
 import com.libronet.libronet.dto.FuncionarioRequest;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import jakarta.validation.constraints.NotNull;
 
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name="funcionarios")
@@ -30,6 +28,21 @@ public class Funcionario {
 
     @Column(name = "fecha_ingreso")
     private LocalDate fechaIngreso;
+
+    @ManyToOne
+    @JoinColumn(name = "estado_civil_id")
+    private EstadoCivil estadoCivil;
+
+    @ManyToOne
+    @JoinColumn(name = "tipo_doc_id")
+    private TipoDocumento tipoDocumento;
+
+    @ManyToOne
+    @JoinColumn(name = "formacion_id")
+    private FormacionAcademica formacionAcademica;
+
+    @OneToMany(mappedBy = "funcionario")
+    private List<GrupoFamiliar> grupoFamiliar;
 
     public Funcionario(FuncionarioRequest request) {
         this.numeroDocumento = request.getNumeroDocumento();

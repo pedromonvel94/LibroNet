@@ -17,7 +17,7 @@ public class FuncionarioDAOImp implements FuncionarioDAO{
 
     @Override
     public FuncionarioResponse findById(Long numeroDocumento) {
-        String jpql = "SELECT new com.libronet.libronet.dto.FuncionarioResponse(f.numeroDocumento, f.nombreCompleto, f.fechaIngreso) FROM Funcionario f WHERE f.numeroDocumento = :numeroDocumento";
+        String jpql = "SELECT new com.libronet.libronet.dto.FuncionarioResponse(f.numeroDocumento, f.tipoDocumento.nombreTipoDoc, f.nombreCompleto, f.fechaIngreso, f.estadoCivil.nombreEstado, f.formacionAcademica.nivelFormacion) FROM Funcionario f WHERE f.numeroDocumento = :numeroDocumento";
 
         System.out.println("JPQL: " + jpql);
 
@@ -34,7 +34,7 @@ public class FuncionarioDAOImp implements FuncionarioDAO{
 
     @Override
     public List<FuncionarioResponse> findAll() {
-        String jpql = "SELECT new com.libronet.libronet.dto.FuncionarioResponse(f.numeroDocumento, f.nombreCompleto, f.fechaIngreso) FROM Funcionario f";
+        String jpql = "SELECT new com.libronet.libronet.dto.FuncionarioResponse(f.numeroDocumento, f.tipoDocumento.nombreTipoDoc, f.nombreCompleto, f.fechaIngreso, f.estadoCivil.nombreEstado, f.formacionAcademica.nivelFormacion) FROM Funcionario f";
 
         return this.entityManager.createQuery(jpql, FuncionarioResponse.class)
                 .getResultList();
