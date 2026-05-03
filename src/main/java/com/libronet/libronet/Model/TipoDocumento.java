@@ -21,4 +21,8 @@ public class TipoDocumento {
     @Column(name = "nombre_tipo", nullable = false)
     @NotBlank(message = "El tipo de documento es obligatorio")
     private String nombreTipoDoc;
+
+    public TipoDocumento(Long tipoDocId) {
+        this.idTipoDoc = tipoDocId;
+    }
 }

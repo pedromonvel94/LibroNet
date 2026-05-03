@@ -1,8 +1,12 @@
 package com.libronet.libronet.dao;
 
+import com.libronet.libronet.Model.EstadoCivil;
+import com.libronet.libronet.Model.FormacionAcademica;
 import com.libronet.libronet.Model.Funcionario;
+import com.libronet.libronet.Model.TipoDocumento;
 import com.libronet.libronet.dto.FuncionarioRequest;
 import com.libronet.libronet.dto.FuncionarioResponse;
+import com.libronet.libronet.dto.GrupoFamiliarResponse;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
@@ -17,27 +21,60 @@ public class FuncionarioDAOImp implements FuncionarioDAO{
 
     @Override
     public FuncionarioResponse findById(Long numeroDocumento) {
-        String jpql = "SELECT new com.libronet.libronet.dto.FuncionarioResponse(f.numeroDocumento, f.tipoDocumento.nombreTipoDoc, f.nombreCompleto, f.fechaIngreso, f.estadoCivil.nombreEstado, f.formacionAcademica.nivelFormacion) FROM Funcionario f WHERE f.numeroDocumento = :numeroDocumento";
-
-        System.out.println("JPQL: " + jpql);
-
         try {
-            return this.entityManager.createQuery(jpql, FuncionarioResponse.class)
-                    .setParameter("numeroDocumento", numeroDocumento)
-                    .getSingleResult();
-        } catch (NoResultException e) {
-            return null;
-        }catch (Exception e){
-            throw new RuntimeException("Error al obtener el funcionario con número de documento: " + numeroDocumento, e);
+            Funcionario f = this.entityManager.find(Funcionario.class, numeroDocumento);
+
+            if (f == null) return null;
+
+            List<GrupoFamiliarResponse> familiares = f.getGrupoFamiliar()
+                    .stream()
+                    .map(gf -> new GrupoFamiliarResponse(
+                            gf.getNombreFamiliar(),
+                            gf.getParentesco()
+                    ))
+                    .toList();
+
+            return new FuncionarioResponse(
+                    f.getNumeroDocumento(),
+                    f.getTipoDocumento().getNombreTipoDoc(),
+                    f.getNombreCompleto(),
+                    f.getFechaIngreso(),
+                    f.getEstadoCivil().getNombreEstado(),
+                    f.getFormacionAcademica().getNivelFormacion(),
+                    familiares
+            );
+        } catch (Exception e) {
+            throw new RuntimeException("Error al obtener el funcionario: " + numeroDocumento, e);
         }
     }
 
     @Override
     public List<FuncionarioResponse> findAll() {
-        String jpql = "SELECT new com.libronet.libronet.dto.FuncionarioResponse(f.numeroDocumento, f.tipoDocumento.nombreTipoDoc, f.nombreCompleto, f.fechaIngreso, f.estadoCivil.nombreEstado, f.formacionAcademica.nivelFormacion) FROM Funcionario f";
-
-        return this.entityManager.createQuery(jpql, FuncionarioResponse.class)
+        List<Funcionario> funcionarios = this.entityManager
+                .createQuery("FROM Funcionario f", Funcionario.class)
                 .getResultList();
+
+        return funcionarios.stream()
+                .map(f -> {
+                    List<GrupoFamiliarResponse> familiares = f.getGrupoFamiliar()
+                            .stream()
+                            .map(gf -> new GrupoFamiliarResponse(
+                                    gf.getNombreFamiliar(),
+                                    gf.getParentesco()
+                            ))
+                            .toList();
+
+                    return new FuncionarioResponse(
+                            f.getNumeroDocumento(),
+                            f.getTipoDocumento().getNombreTipoDoc(),
+                            f.getNombreCompleto(),
+                            f.getFechaIngreso(),
+                            f.getEstadoCivil().getNombreEstado(),
+                            f.getFormacionAcademica().getNivelFormacion(),
+                            familiares
+                    );
+                })
+                .toList();
     }
 
     @Override
@@ -57,6 +94,9 @@ public class FuncionarioDAOImp implements FuncionarioDAO{
 
         funcionario.setNombreCompleto(request.getNombreCompleto());
         funcionario.setFechaIngreso(request.getFechaIngreso());
+        funcionario.setEstadoCivil(new EstadoCivil(request.getEstadoCivilId()));
+        funcionario.setTipoDocumento(new TipoDocumento(request.getTipoDocId()));
+        funcionario.setFormacionAcademica(new FormacionAcademica(request.getFormacionId()));
 
         this.entityManager.merge(funcionario);
 

@@ -21,4 +21,7 @@ public class FormacionAcademica {
     @NotBlank(message = "El nivel de formación es obligatorio")
     private String nivelFormacion;
 
+    public FormacionAcademica(Long formacionId) {
+        this.idNivelFormacion = formacionId;
+    }
 }

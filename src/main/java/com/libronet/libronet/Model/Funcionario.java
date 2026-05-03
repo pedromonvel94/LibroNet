@@ -48,5 +48,8 @@ public class Funcionario {
         this.numeroDocumento = request.getNumeroDocumento();
         this.nombreCompleto = request.getNombreCompleto();
         this.fechaIngreso = request.getFechaIngreso();
+        this.estadoCivil = new EstadoCivil(request.getEstadoCivilId());
+        this.tipoDocumento = new TipoDocumento(request.getTipoDocId());
+        this.formacionAcademica = new FormacionAcademica(request.getFormacionId());
     }
 }

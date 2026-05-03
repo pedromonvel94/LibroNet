@@ -14,11 +14,15 @@ import lombok.NoArgsConstructor;
 public class EstadoCivil {
 
     @Id
-    @Column(name = "numero_documento")
+    @Column(name = "id_estado_civil")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idNumDocumento;
+    private Long idEstadoCivil;
 
     @Column(name = "nombre_estado", nullable = false)
     @NotBlank(message = "El estado civil es obligatorio")
     private String nombreEstado;
+
+    public EstadoCivil(Long estadoCivilId) {
+        this.idEstadoCivil = estadoCivilId;
+    }
 }

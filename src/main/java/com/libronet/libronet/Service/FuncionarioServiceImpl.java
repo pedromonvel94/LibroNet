@@ -4,6 +4,7 @@ import com.libronet.libronet.Model.Funcionario;
 import com.libronet.libronet.dao.FuncionarioDAO;
 import com.libronet.libronet.dto.FuncionarioRequest;
 import com.libronet.libronet.dto.FuncionarioResponse;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,17 +28,20 @@ public class FuncionarioServiceImpl implements FuncionarioService {
     }
 
     @Override
+    @Transactional
     public void save(FuncionarioRequest request) {
-
+        this.funcionarioDAO.save(request);
     }
 
     @Override
+    @Transactional
     public boolean update(Long numeroDocumento, FuncionarioRequest request) {
-        return false;
+        return this.funcionarioDAO.update(numeroDocumento, request);
     }
 
     @Override
+    @Transactional
     public boolean deleteById(Long numeroDocumento) {
-        return false;
+        return this.funcionarioDAO.deleteById(numeroDocumento);
     }
 }
