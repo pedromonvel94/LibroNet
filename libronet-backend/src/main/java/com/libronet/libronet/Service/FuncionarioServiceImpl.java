@@ -1,6 +1,5 @@
 package com.libronet.libronet.Service;
 
-import com.libronet.libronet.Model.Funcionario;
 import com.libronet.libronet.dao.FuncionarioDAO;
 import com.libronet.libronet.dto.FuncionarioRequest;
 import com.libronet.libronet.dto.FuncionarioResponse;
@@ -14,15 +13,18 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class FuncionarioServiceImpl implements FuncionarioService {
+
     private final FuncionarioDAO funcionarioDAO;
 
     @Override
+    @Transactional   // ← necesario para cargar grupoFamiliar (lazy)
     public Optional<FuncionarioResponse> findById(Long numeroDocumento) {
         FuncionarioResponse response = this.funcionarioDAO.findById(numeroDocumento);
         return response == null ? Optional.empty() : Optional.of(response);
     }
 
     @Override
+    @Transactional   // ← necesario para cargar grupoFamiliar (lazy)
     public List<FuncionarioResponse> findAll() {
         return this.funcionarioDAO.findAll();
     }
