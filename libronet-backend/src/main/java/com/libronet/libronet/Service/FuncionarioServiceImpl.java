@@ -17,14 +17,14 @@ public class FuncionarioServiceImpl implements FuncionarioService {
     private final FuncionarioDAO funcionarioDAO;
 
     @Override
-    @Transactional   // ← necesario para cargar grupoFamiliar (lazy)
+    @Transactional
     public Optional<FuncionarioResponse> findById(Long numeroDocumento) {
         FuncionarioResponse response = this.funcionarioDAO.findById(numeroDocumento);
         return response == null ? Optional.empty() : Optional.of(response);
     }
 
     @Override
-    @Transactional   // ← necesario para cargar grupoFamiliar (lazy)
+    @Transactional
     public List<FuncionarioResponse> findAll() {
         return this.funcionarioDAO.findAll();
     }
