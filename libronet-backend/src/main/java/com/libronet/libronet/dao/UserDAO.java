@@ -1,11 +1,12 @@
 package com.libronet.libronet.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.libronet.libronet.Model.User;
 
 public interface UserDAO {
-    User findByCorreo(String correo);
+    Optional<User> findByCorreo(String correo);
 
     User findById(Long id);
 
