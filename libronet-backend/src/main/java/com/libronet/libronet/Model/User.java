@@ -27,7 +27,10 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "users")
 public class User implements UserDetails { // Implemento UserDetails para que Spring Security pueda usar mi modelo
-                                           // directamente al autenticar
+                                           // directamente al autenticar (Ya que no sabe que campos son los correctos
+                                           // para el login, por ejemplo no sabe si mi campo de usuario se llama correo,
+                                           // email, login o usuario, ni si mi contraseña se llama contrasena o
+                                           // password)
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,13 +53,14 @@ public class User implements UserDetails { // Implemento UserDetails para que Sp
     @Column(nullable = false, length = 20)
     private Estado estado;
 
-    // Métodos obligatorios requeridos por Spring Security (UserDetails)
+    // Métodos obligatorios requeridos por Spring Security (metodos que debo cumplir
+    // en el contrato de la interfaz UserDetails)
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // Devuelvo el rol del usuario como su autoridad/permiso. Spring Security usará
+        // Devuelvo el rol del usuario como su autoridad. Spring Security usará
         // esto para el control de accesos
-        return List.of(new SimpleGrantedAuthority((rol.name())));
+        return List.of(new SimpleGrantedAuthority(rol.name()));
     }
 
     @Override
