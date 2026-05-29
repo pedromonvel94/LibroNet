@@ -56,7 +56,7 @@ public class User implements UserDetails { // Implemento UserDetails para que Sp
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // Devuelvo el rol del usuario como su autoridad/permiso. Spring Security usará
         // esto para el control de accesos
-        return List.of(new SimpleGrantedAuthority(rol.name()));
+        return List.of(new SimpleGrantedAuthority((rol.name())));
     }
 
     @Override
