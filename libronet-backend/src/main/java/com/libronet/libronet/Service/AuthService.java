@@ -1,5 +1,6 @@
 package com.libronet.libronet.Service;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.libronet.libronet.Model.User;
