@@ -1,0 +1,126 @@
+/* =============================================
+   AuthPage.css — Login & Registro
+   ============================================= */
+
+.auth-page {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl) var(--space-md);
+  min-height: calc(100vh - 64px);
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 40%, rgba(79,127,255,0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 60% at 80% 70%, rgba(123,94,167,0.07) 0%, transparent 70%),
+    var(--color-bg);
+}
+
+.auth-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  width: 100%;
+  max-width: 420px;
+  box-shadow: var(--shadow-card), var(--shadow-glow);
+  animation: fadeUp 0.35s ease both;
+}
+
+.auth-card__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-xl);
+}
+
+.auth-card__logo {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-2));
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 800; font-size: 14px;
+  color: #fff; letter-spacing: -0.5px;
+  flex-shrink: 0;
+}
+
+.auth-card__app {
+  font-family: var(--font-display);
+  font-weight: 700; font-size: 18px;
+  color: var(--color-text); letter-spacing: -0.3px;
+}
+
+.auth-card__title {
+  font-family: var(--font-display);
+  font-size: 24px; font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: var(--space-xs);
+}
+
+.auth-card__sub {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-xl);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.auth-form .form-field label {
+  font-size: 12px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.6px;
+  color: var(--color-text-muted);
+  display: block; margin-bottom: 6px;
+}
+
+.auth-form .form-field input,
+.auth-form .form-field select {
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  color: var(--color-text); font-size: 14px;
+  outline: none; width: 100%;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: var(--font-body);
+  -webkit-appearance: none; appearance: none;
+}
+
+.auth-form .form-field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a8099' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px; cursor: pointer;
+}
+
+.auth-form .form-field select option { background: #1c2030; color: #e8eaf0; }
+.auth-form .form-field input::placeholder { color: var(--color-text-dim); }
+
+.auth-form .form-field input:focus,
+.auth-form .form-field select:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(79,127,255,0.12);
+}
+
+.auth-form .form-field input.error,
+.auth-form .form-field select.error { border-color: var(--color-danger); }
+
+.form-field__error { font-size: 12px; color: var(--color-danger); margin-top: 2px; display: block; }
+
+.auth-submit {
+  width: 100%; justify-content: center;
+  padding: 12px; font-size: 15px;
+  margin-top: var(--space-sm);
+}
+
+.form-alert { padding: 10px 14px; border-radius: var(--radius-sm); font-size: 13px; margin-bottom: var(--space-md); }
+.form-alert--success { background: rgba(45,212,160,0.1); border: 1px solid rgba(45,212,160,0.25); color: var(--color-success); }
+.form-alert--error   { background: rgba(240,93,122,0.1); border: 1px solid rgba(240,93,122,0.25); color: var(--color-danger); }
+
+.auth-card__footer { margin-top: var(--space-lg); text-align: center; font-size: 13px; color: var(--color-text-muted); }
+
+.auth-link { color: var(--color-accent); font-weight: 600; transition: opacity 0.15s; }
+.auth-link:hover { opacity: 0.8; text-decoration: underline; }

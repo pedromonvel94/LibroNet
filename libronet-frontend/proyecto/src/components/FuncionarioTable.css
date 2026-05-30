@@ -1,0 +1,86 @@
+/* =============================================
+   FuncionarioTable.css
+   ============================================= */
+
+.table-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+
+.table-card__header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--space-lg) var(--space-xl);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.table-card__title { font-family: var(--font-display); font-size: 18px; font-weight: 700; }
+
+.table-card__count {
+  font-size: 13px; color: var(--color-text-muted);
+  background: var(--color-surface-2); border: 1px solid var(--color-border);
+  padding: 3px 10px; border-radius: 20px;
+}
+
+.table-search { padding: var(--space-md) var(--space-xl); border-bottom: 1px solid var(--color-border); }
+
+.table-search__input {
+  width: 100%; max-width: 360px;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 8px 14px;
+  color: var(--color-text); font-size: 14px;
+  outline: none; transition: border-color 0.2s;
+}
+.table-search__input::placeholder { color: var(--color-text-dim); }
+.table-search__input:focus { border-color: var(--color-accent); }
+
+.table-wrap { overflow-x: auto; }
+
+table { width: 100%; border-collapse: collapse; }
+
+thead th {
+  padding: 12px var(--space-xl);
+  text-align: left;
+  font-family: var(--font-display);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+  color: var(--color-text-dim);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+
+tbody tr {
+  border-bottom: 1px solid var(--color-border);
+  transition: background 0.15s;
+  animation: fadeUp 0.3s ease both;
+}
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: var(--color-surface-2); }
+
+tbody td { padding: 14px var(--space-xl); font-size: 14px; color: var(--color-text); white-space: nowrap; }
+
+.td-doc { font-family: var(--font-display); font-weight: 600; font-size: 15px; color: var(--color-accent); }
+.td-name { font-weight: 500; }
+.td-date { color: var(--color-text-muted); font-size: 13px; }
+
+.table-actions { display: flex; align-items: center; gap: var(--space-sm); }
+
+.btn-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-muted); font-size: 15px;
+  transition: all 0.15s;
+}
+.btn-icon:hover { border-color: var(--color-accent); color: var(--color-accent); background: rgba(79,127,255,0.08); }
+.btn-icon--danger:hover { border-color: var(--color-danger); color: var(--color-danger); background: rgba(240,93,122,0.08); }
+
+.table-empty { padding: var(--space-2xl); text-align: center; color: var(--color-text-muted); font-size: 14px; }
+.table-empty__icon { font-size: 36px; margin-bottom: var(--space-sm); display: block; }
