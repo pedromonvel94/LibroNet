@@ -90,9 +90,12 @@ public class UserDAOImp implements UserDAO {
                 return false;
             }
 
-            this.entityManager.remove(user);
-            return true;
+            // Soft delete: marcamos el usuario como inactivo en lugar de borrarlo
+            // físicamente de la base de datos
+            user.setEstado(User.Estado.INACTIVO);
+            this.entityManager.merge(user);
 
+            return true;
         } catch (Exception e) {
             return false;
         }
