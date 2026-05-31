@@ -6,7 +6,10 @@ const BASE = '/api/catalogos';
 
 async function fetchCatalog(url, fallback) {
   try {
-    const res = await fetch(url);
+    const token = localStorage.getItem('token');
+    const res = await fetch(url, {
+      headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+    });
     if (!res.ok) throw new Error('no catalog endpoint');
     return res.json();
   } catch {
