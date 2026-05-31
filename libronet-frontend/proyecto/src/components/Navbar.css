@@ -88,3 +88,28 @@
 
 .btn--danger { background: var(--color-danger); color: #fff; border: none; }
 .btn--danger:hover { background: #d94a65; transform: translateY(-1px); }
+
+/* Estilos para el saludo al usuario y enlaces de navegación */
+.navbar__user-greeting {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  margin-right: var(--space-md);
+  font-weight: 500;
+}
+
+.navbar__link {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  transition: all 0.18s;
+}
+
+.navbar__link:hover,
+.navbar__link.active {
+  color: var(--color-text);
+  background: var(--color-surface-2);
+}
+

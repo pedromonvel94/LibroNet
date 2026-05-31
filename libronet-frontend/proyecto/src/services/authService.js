@@ -18,9 +18,13 @@ export async function login(correo, contrasena) {
 }
 
 export async function register(data) {
+  const token = localStorage.getItem('token');
   const res = await fetch(`${BASE_URL}/registro`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+    },
     body: JSON.stringify(data),
   });
   if (!res.ok) {

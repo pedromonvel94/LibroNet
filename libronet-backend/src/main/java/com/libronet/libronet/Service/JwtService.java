@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,8 @@ public class JwtService {
     // texto plano.
     // En un proyecto real, esto debería vivir en application.properties, no aquí
     // directamente.
-    private static final String SECRET_KEY = "bGlicm9uZXRfY2xhdmVfc3VwZXJfc2VjcmV0YV9kZXNhcnJvbGxvX3NlZ3Vyb18yMDI0";
+    @Value("${security.jwt.secret-key}")
+    private String secretKey;
 
     public String getToken(UserDetails user) {
         return getToken(new HashMap<>(), user);
@@ -50,7 +52,7 @@ public class JwtService {
     // se crea la instancia de nuestra secret Key
     private Key getSignInKey() {
         // Decodificamos de Base64 a bytes — ese es el formato que JJWT necesita
-        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         // Creamos la Key usando HMAC-SHA, que corresponde al algoritmo HS256
         return Keys.hmacShaKeyFor(keyBytes);
     }

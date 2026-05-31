@@ -1,12 +1,21 @@
-// =============================================
-// Navbar.jsx
-// =============================================
-
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import './Navbar.css';
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const location = useLocation(); // Obliga a re-renderizar el Navbar cada vez que cambia la ruta
+
+  const token = localStorage.getItem('token');
+  const nombre = localStorage.getItem('nombre');
+  const rol = localStorage.getItem('rol');
+
+  // Función para cerrar la sesión limpiando el almacenamiento
+  function handleLogout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('nombre');
+    localStorage.removeItem('rol');
+    navigate('/login');
+  }
 
   return (
     <nav className="navbar">
@@ -16,19 +25,39 @@ export default function Navbar() {
       </NavLink>
 
       <div className="navbar__nav">
-        <button
-          className="btn btn--secondary navbar__btn"
-          onClick={() => navigate('/login')}
-        >
-          Iniciar sesión
-        </button>
-        <button
-          className="btn btn--primary navbar__btn"
-          onClick={() => navigate('/registro')}
-        >
-          Registro
-        </button>
+        {token ? (
+          <>
+            {/* Saludo amigable con el nombre del usuario logueado */}
+            <span className="navbar__user-greeting">Hola, {nombre}</span>
+
+            {/* Todo usuario autenticado puede ver la lista de Funcionarios */}
+            <NavLink to="/funcionarios" className="navbar__link">Funcionarios</NavLink>
+
+            {/* Solo los administradores pueden ver la gestión de usuarios y registrar nuevos */}
+            {rol === 'ADMIN' && (
+              <>
+                <NavLink to="/usuarios" className="navbar__link">Usuarios</NavLink>
+                <NavLink to="/registro" className="navbar__link">Registro</NavLink>
+              </>
+            )}
+
+            <button className="btn btn--secondary navbar__btn" onClick={handleLogout}>
+              Cerrar sesión
+            </button>
+          </>
+        ) : (
+          <>
+            {/* Si no está autenticado, solo mostramos el botón para Iniciar sesión */}
+            <button
+              className="btn btn--secondary navbar__btn"
+              onClick={() => navigate('/login')}
+            >
+              Iniciar sesión
+            </button>
+          </>
+        )}
       </div>
     </nav>
   );
 }
+

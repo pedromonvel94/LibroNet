@@ -38,12 +38,14 @@ public class AuthService {
         // Si las credenciales son correctas entonces lo que hago es obtener al correo
         // en la base de datos para posteriormente generar el token. Aqui se usa
         // orElseThrow() porque si no existe el usuario lanza una excepción.
-        UserDetails user = userDAO.findByCorreo(request.getCorreo()).orElseThrow();
+        User user = userDAO.findByCorreo(request.getCorreo()).orElseThrow();
         // Luego obtengo el token llamando al metodo getToken().
         String token = jwtService.getToken(user);
         // Finalmente retorno la respuesta con el token.
         return AuthResponse.builder()
                 .token(token)
+                .nombre(user.getNombre())
+                .rol(user.getRol().name())
                 .build();
     }
 
@@ -66,6 +68,8 @@ public class AuthService {
         // generar el JWT.
         return AuthResponse.builder()
                 .token(jwtService.getToken(user))
+                .nombre(user.getNombre())
+                .rol(user.getRol().name())
                 .build();
     }
 }

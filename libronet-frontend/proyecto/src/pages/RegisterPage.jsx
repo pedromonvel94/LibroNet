@@ -8,13 +8,13 @@ import { register } from '../services/authService';
 import './AuthPage.css';
 
 const ROLES = [
-  { value: 'ADMINISTRADOR', label: 'Administrador' },
-  { value: 'RRHH',          label: 'RRHH'          },
+  { value: 'ADMIN', label: 'Administrador' },
+  { value: 'RRHH',  label: 'RRHH'          },
 ];
 
 function validate(values) {
   const e = {};
-  if (!values.nombreCompleto.trim()) e.nombreCompleto = 'El nombre es requerido';
+  if (!values.nombre.trim()) e.nombre = 'El nombre es requerido';
   if (!values.correo.trim())         e.correo         = 'El correo es requerido';
   else if (!/\S+@\S+\.\S+/.test(values.correo)) e.correo = 'Correo inválido';
   if (!values.contrasena)            e.contrasena     = 'La contraseña es requerida';
@@ -25,7 +25,7 @@ function validate(values) {
 
 export default function RegisterPage() {
   const navigate = useNavigate();
-  const [values, setValues] = useState({ nombreCompleto: '', correo: '', contrasena: '', rol: '' });
+  const [values, setValues] = useState({ nombre: '', correo: '', contrasena: '', rol: '' });
   const [errors,  setErrors]  = useState({});
   const [status,  setStatus]  = useState(null);
   const [message, setMessage] = useState('');
@@ -47,8 +47,8 @@ export default function RegisterPage() {
     try {
       await register(values);
       setStatus('success');
-      setMessage('¡Cuenta creada! Redirigiendo al inicio de sesión...');
-      setTimeout(() => navigate('/login'), 1400);
+      setMessage('¡Usuario registrado con éxito! Redirigiendo...');
+      setTimeout(() => navigate('/usuarios'), 1400);
     } catch (err) {
       setStatus('error');
       setMessage(err.message);
@@ -65,8 +65,8 @@ export default function RegisterPage() {
           <span className="auth-card__app">Libronet</span>
         </div>
 
-        <h1 className="auth-card__title">Crear cuenta</h1>
-        <p className="auth-card__sub">Completa los datos para registrarte</p>
+        <h1 className="auth-card__title">Registrar nuevo usuario</h1>
+        <p className="auth-card__sub">Ingresa los datos para registrar un usuario administrativo</p>
 
         {status && (
           <div className={`form-alert form-alert--${status}`}>
@@ -76,15 +76,15 @@ export default function RegisterPage() {
 
         <form onSubmit={handleSubmit} noValidate className="auth-form">
           <div className="form-field">
-            <label htmlFor="nombreCompleto">Nombre completo</label>
+            <label htmlFor="nombre">Nombre completo</label>
             <input
-              id="nombreCompleto" name="nombreCompleto" type="text"
+              id="nombre" name="nombre" type="text"
               placeholder="Ej: María García López"
-              value={values.nombreCompleto} onChange={handleChange}
-              className={errors.nombreCompleto ? 'error' : ''}
+              value={values.nombre} onChange={handleChange}
+              className={errors.nombre ? 'error' : ''}
               autoComplete="name"
             />
-            {errors.nombreCompleto && <span className="form-field__error">{errors.nombreCompleto}</span>}
+            {errors.nombre && <span className="form-field__error">{errors.nombre}</span>}
           </div>
 
           <div className="form-field">
@@ -131,10 +131,6 @@ export default function RegisterPage() {
           </button>
         </form>
 
-        <p className="auth-card__footer">
-          ¿Ya tienes cuenta?{' '}
-          <NavLink to="/login" className="auth-link">Inicia sesión</NavLink>
-        </p>
       </div>
     </main>
   );

@@ -38,10 +38,14 @@ export default function LoginPage() {
     setStatus(null);
     try {
       const data = await login(values.correo, values.contrasena);
-      if (data.token) localStorage.setItem('token', data.token);
+      if (data.token) {
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('nombre', data.nombre || '');
+        localStorage.setItem('rol', data.rol || '');
+      }
       setStatus('success');
       setMessage('¡Bienvenido! Redirigiendo...');
-      setTimeout(() => navigate('/funcionarios'), 1200);
+      setTimeout(() => navigate('/'), 1200);
     } catch (err) {
       setStatus('error');
       setMessage(err.message);
