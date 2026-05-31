@@ -12,10 +12,12 @@ import com.libronet.libronet.dto.LoginRequest;
 import com.libronet.libronet.dto.RegisterRequest;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class AuthService {
 
     // Inyecto la dependencia de UserDAO utilizando el constructor

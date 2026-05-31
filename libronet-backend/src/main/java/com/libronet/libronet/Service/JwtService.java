@@ -23,8 +23,10 @@ public class JwtService {
     // logueado
 
     // Esta es nuestra clave secreta para firmar y verificar los tokens JWT.
-    // Está codificada en Base64 porque la librería JJWT trabaja con bytes, no con texto plano.
-    // En un proyecto real, esto debería vivir en application.properties, no aquí directamente.
+    // Está codificada en Base64 porque la librería JJWT trabaja con bytes, no con
+    // texto plano.
+    // En un proyecto real, esto debería vivir en application.properties, no aquí
+    // directamente.
     private static final String SECRET_KEY = "bGlicm9uZXRfY2xhdmVfc3VwZXJfc2VjcmV0YV9kZXNhcnJvbGxvX3NlZ3Vyb18yMDI0";
 
     public String getToken(UserDetails user) {
@@ -42,9 +44,9 @@ public class JwtService {
                 .compact();
     }
 
-    // Declaro el metodo private Key getSignInKey() el cual se encarga de 
-    // decodificar la clave secreta y convertirla a base 64 para poder 
-    // firmar y verificar los tokens JWT. Ademas con hmacShaKeyFor() 
+    // Declaro el metodo private Key getSignInKey() el cual se encarga de
+    // decodificar la clave secreta y convertirla a base 64 para poder
+    // firmar y verificar los tokens JWT. Ademas con hmacShaKeyFor()
     // se crea la instancia de nuestra secret Key
     private Key getSignInKey() {
         // Decodificamos de Base64 a bytes — ese es el formato que JJWT necesita
@@ -57,13 +59,14 @@ public class JwtService {
     // ese token.
     // Así sabemos quién está haciendo la solicitud sin necesidad de ir a la base de
     // datos.
-    public String getUsernameFromToken(String token) {
+    public String getCorreoFromToken(String token) {
         return getClaim(token, Claims::getSubject);
     }
 
-    // Verifica que el token sea válido: que pertenezca al usuario correcto y que no haya expirado
+    // Verifica que el token sea válido: que pertenezca al usuario correcto y que no
+    // haya expirado
     public boolean isTokenValid(String token, UserDetails userDetails) {
-        final String username = getUsernameFromToken(token);
+        final String username = getCorreoFromToken(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
@@ -85,12 +88,12 @@ public class JwtService {
 
     // Desencripta y lee todos los datos guardados dentro del token
     private Claims getAllClaims(String token) {
-    return Jwts
-        .parserBuilder()
-        .setSigningKey(getSignInKey())
-        .build()
-        .parseClaimsJws(token)
-        .getBody();
-}
+        return Jwts
+                .parserBuilder()
+                .setSigningKey(getSignInKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
 
 }
