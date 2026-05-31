@@ -14,7 +14,7 @@ import com.libronet.libronet.dto.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
@@ -36,7 +36,7 @@ public class AuthController {
 
     // Configuro este método para que responda únicamente a peticiones HTTP del tipo
     // POST que vayan a la ruta /auth/register.
-    @PostMapping(value = "register")
+    @PostMapping(value = "registro")
     // Recibo los datos de registro del usuario. Uso @RequestBody para convertir el
     // JSON recibido en mi objeto estructurado RegisterRequest.
     public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
